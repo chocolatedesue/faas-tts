@@ -53,11 +53,30 @@ def text_to_seq_func(text: str, cleaner_names, symbols, add_blank=True):
     pattern = build_pattern()
     text = pattern.sub(' ', text).strip()
 
-    text_norm = text_to_sequence(
+    clean_text, text_norm = text_to_sequence_func(
         text, symbols, cleaner_names=cleaner_names)
     if add_blank:
         text_norm = intersperse(text_norm, 0)
-    return text_norm
+    return clean_text, text_norm
+
+
+def text_to_sequence_func(text, symbols, cleaner_names):
+
+    _symbol_to_id = {s: i for i, s in enumerate(symbols)}
+
+    clean_text = _clean_text(text, cleaner_names)
+
+    sequence = [
+        _symbol_to_id[symbol] for symbol in clean_text if symbol in _symbol_to_id.keys()
+    ]
+
+    # for symbol in clean_text:
+    #     if symbol not in _symbol_to_id.keys():
+    #         continue
+    #     symbol_id = _symbol_to_id[symbol]
+    #     sequence += [symbol_id]
+    return clean_text, sequence
+
 
 
 def text_to_sequence(text, symbols, cleaner_names):

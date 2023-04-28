@@ -16,11 +16,18 @@ class g2pBody(BaseModel):
     symbols: Union[List[str], str]
     text: str
 
+class g2pResponse(BaseModel):
+    sequence: List[int]
+    clean_text: str
+
 
 class ttsBody(BaseModel):
     sequence: List[int]
     sid: int
     speed: float
+
+# class ttsResponse(BaseModel):
+    # audio: bytes
     
 
 ort_sess = None
@@ -73,7 +80,7 @@ def vits_onnx_infer(seq, speaker_id, speed=1.0,sampling_rate=22050):
 
 
 
-@app.post("/g2p")
+@app.post("/g2p", response_model=g2pResponse)
 def g2p(g2pBody: g2pBody):
     if g2pBody.cleanner_name not in avaliabe_cleaners:
         return {"error": "cleaner_name not found"}
@@ -82,13 +89,13 @@ def g2p(g2pBody: g2pBody):
         g2pBody.symbols = g2pBody.symbols.replace("]", "")
         g2pBody.symbols = g2pBody.symbols.split(",")
 
-    sequence = text_to_seq_func(
+    clean_text, sequence = text_to_seq_func(
         g2pBody.text, [g2pBody.cleanner_name], g2pBody.symbols)
-    sequence = str(sequence)
-    return {"sequence": sequence}
+    
+    return {"sequence": sequence, "clean_text": clean_text}
 
 
-@app.post("/clean/vits/tts")
+@app.post("/clean/vits/tts",response_class=StreamingResponse)
 def tts(ttsBody: ttsBody):
     # logger.info(ttsBody)
     # return {"success": "success"}
