@@ -12,10 +12,15 @@ pattern = None
 # jieba.initialize()
 # pyopenjtalk._lazy_init()
 
-avaliabe_cleaners = [
-    "zh_ja_mixture_cleaners",
-    "japanese_cleaners2"
-]
+# avaliabe_cleaners = [
+#     "zh_ja_mixture_cleaners",
+#     "japanese_cleaners2"
+# ]
+
+symbols_dict = {
+    "zh_ja_mixture_cleaners":["_", ",", ".", "!", "?", "-", "~", "\u2026", "A", "E", "I", "N", "O", "Q", "U", "a", "b", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "r", "s", "t", "u", "v", "w", "y", "z", "\u0283", "\u02a7", "\u02a6", "\u026f", "\u0279", "\u0259", "\u0265", "\u207c", "\u02b0", "`", "\u2192", "\u2193", "\u2191", " "],
+    "japanese_cleaners2":["_", ",", ".", "!", "?", "-", "~", "\u2026", "A", "E", "I", "N", "O", "Q", "U", "a", "b", "d", "e", "f", "g", "h", "i", "j", "k", "m", "n", "o", "p", "r", "s", "t", "u", "v", "w", "y", "z", "\u0283", "\u02a7", "\u02a6", "\u2193", "\u2191", " "]
+}
 
 
 def intersperse(lst, item):
@@ -45,7 +50,7 @@ def text_to_seq(text: str, hps):
     return text_norm
 
 
-def text_to_seq_func(text: str, cleaner_names, symbols, add_blank=True):
+def  text_to_seq_func(text: str, cleaner_names, symbols, add_blank=True):
 
     # if "japanese_cleaners" in hps.data.text_cleaners:
     # global pattern
