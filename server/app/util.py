@@ -11,6 +11,11 @@ def download_with_tqdm(url,detination):
         with open(detination, 'wb') as f:
             for data in tqdm(iterable=r.iter_content(1024), total=content_length / 1024, unit='KB'):
                 f.write(data)
+    except KeyError as e:
+        logger.error(e)
+        r = requests.get(url)
+        with open(detination, 'wb') as f:
+            f.write(r.content)
     except Exception as e:
         logger.error(e)
         raise e 

@@ -62,6 +62,8 @@ def vits_onnx_infer(ttsBody: CleanTTSBody):
                 raise HTTPException(status_code=500, detail="Model not found, please set MODEL_URL or IS_DOWNLOAD_JP_MODEL or IS_DOWNLOAD_JP_CN_MODEL or put model.onnx in ./weight/")
             # if url and config_url:
             # try:
+            
+
             download_with_tqdm(url, str(model))
             download_with_tqdm(config_url, str(model.parent / "config.json"))
             

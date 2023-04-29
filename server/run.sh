@@ -4,8 +4,8 @@
 
 function docker {
     docker build . -t test 
-    docker run -p 9000:8000 --rm --name test \
-    -e IS_DOWNLOAD_JP_MODEL=foo \
+    docker run -p 8000:8000 --rm --name test \
+    -e IS_DOWNLOAD_JP_CN_MODEL=foo \
     test
 }
 
