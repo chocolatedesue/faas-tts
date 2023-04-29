@@ -3,6 +3,10 @@ import azure.functions as func
 from app import app  # Main API application
 # import text 
 
+# import pyopenjtalk
+
+# pyopenjtalk._lazy_init()
+
 
 # @app.get("/sample")
 # async def index():

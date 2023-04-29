@@ -1,33 +1,18 @@
-# # Do not include azure-functions-worker in this file
-# # The Python Worker is managed by the Azure Functions platform
-# # Manually managing azure-functions-worker may cause unexpected issues
-
-# azure-functions
-fastapi
-# pyopenjtalk
-pydantic
-cn2an
-jieba
-unidecode
-pypinyin
-tqdm
-# numpy
-
-
-
 # DO NOT include azure-functions-worker in this file
 # The Python Worker is managed by Azure Functions platform
 # Manually managing azure-functions-worker may cause unexpected issues
 
 azure-functions
-
-numpy
-# numba
-# scipy
-# Unidecode
-openjtalk==0.3.0.dev2
-# jamo
+pyopenjtalk-prebuilt==0.3.0
+cn2an
+jieba
+pypinyin
+pydub
+requests
+loguru
 # av
-# -f https://download.pytorch.org/whl/torch_stable.html
-# torch==1.12.0+cpu
-# 
+fastapi
+pydantic
+onnxruntime
+unidecode
+uvicorn 
