@@ -4,6 +4,9 @@
 *.ogg
 *.onnx
 *.zip
+weight/
+.python_packages/
+
 
 
 # Byte-compiled / optimized / DLL files
