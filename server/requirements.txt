@@ -8,7 +8,9 @@ cn2an
 jieba
 pypinyin
 pydub
+requests
 loguru
+# av
 fastapi
 pydantic
 onnxruntime
