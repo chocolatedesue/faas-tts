@@ -1,0 +1,37 @@
+service: scaleway-python3
+configValidationMode: off
+
+useDotenv: true
+
+provider:
+  name: scaleway
+  runtime: python39
+  # Global Environment variables - used in every functions
+  # env:
+  #   test: test
+  # Storing credentials in this file is strongly not recommanded for security concerns, please refer to README.md about best practices
+  scwToken: ${env:SCW_SECRET_KEY}
+  scwProject: ${env:SCW_DEFAULT_PROJECT_ID}
+
+plugins:
+  - serverless-scaleway-functions
+
+package:
+  patterns:
+    - '!node_modules/**'
+    - '!.gitignore'
+    - '!.git/**'
+    - '!serverless.yml'
+    - '!requirements.txt'
+    - '!.env'
+    - "!package-lock.json"
+    - "!package.json"
+    
+
+
+functions:
+  frg2p:
+    handler: handlers/handler.handler
+    # Local environment variables - used only in given function
+    # env:
+    #   local: local
