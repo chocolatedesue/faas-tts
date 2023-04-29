@@ -22,7 +22,24 @@ def vits_onnx_infer(ttsBody: CleanTTSBody):
         from pathlib import Path
         model = Path('./weight/model.onnx')
         # if os.getenv("IS_DOWNLOAD"):
-            
+        import os 
+        if os.getenv("IS_DOWNLOAD_JP_MODEL"):
+            import requests
+            url = "https://r2share.ccds.win/vits_onnx/jp/model.onnx"
+            r = requests.get(url, allow_redirects=True)
+            if not model.parent.exists():
+                model.parent.mkdir(parents=True)
+            with open(model, 'wb') as f:
+                f.write(r.content)
+
+        if os.getenv("IS_DOWNLOAD_JP_CN_MODEL"):
+            import requests
+            url = "https://r2share.ccds.win/vits_onnx/jp_cn/model.onnx"
+            r = requests.get(url, allow_redirects=True)
+            if not model.parent.exists():
+                model.parent.mkdir(parents=True)
+            with open(model, 'wb') as f:
+                f.write(r.content)
 
         # if not os.path.exists('vits.onnx'):
         if not model.exists():
