@@ -6,7 +6,12 @@ function docker {
     docker build . -t test 
     docker run -p 8000:8000 --rm --name test \
     -e IS_DOWNLOAD_JP_CN_MODEL=foo \
+    -v $(pwd)/weight:/app/weight \
     test
+}
+
+function add_env {
+    export PATH=$PATH:~/.local/bin
 }
 
 # mkdir -p  ../func/azure/app
