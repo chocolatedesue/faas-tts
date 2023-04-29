@@ -16,14 +16,11 @@ function add_env {
 
 # mkdir -p  ../func/azure/app
 # rm -rf  ../func/azure/app 
-rsync ./app ../func/azure/app -avzh --dry-run --exclude '__pycache__' 
-rsync ./text ../func/azure/text -avzh --dry-run --exclude '__pycache__'
+rsync ./app ../func/azure -avzh  --exclude '__pycache__' --dry-run
+rsync ./text ../func/azure -avzh --exclude '__pycache__'    --dry-run
 
-rsync ./app ../func/azure/app -avzh  --exclude '__pycache__'
-rsync ./text ../func/azure/text -avzh --exclude '__pycache__'
 
-rsync ./app ../func/scw/handlers/app -avzh --dry-run --exclude '__pycache__'
-rsync ./text ../func/scw/handlers/text -avzh --dry-run --exclude '__pycache__'
 
-rsync ./app ../func/scw/handlers/app -avzh  --exclude '__pycache__'
-rsync ./text ../func/scw/handlers/text -avzh --exclude '__pycache__'
+rsync ./app ../func/azure -avzh  --exclude '__pycache__'
+rsync ./text ../func/azure -avzh --exclude '__pycache__'
+
