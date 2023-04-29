@@ -1,3 +1,23 @@
-uvicorn app:app --reload 
+# uvicorn app:app --reload 
+#  docker run -p 8000:8000 --rm --name test 
 
-rsync ../server func/azure/app
+function docker {
+    docker build . -t test 
+    docker run -p 8000:8000 --rm --name test \
+    -e IS_DOWNLOAD_JP_MODEL=foo \
+    test
+}
+
+# mkdir -p  ../func/azure/app
+# rm -rf  ../func/azure/app 
+rsync ./app ../func/azure/app -avzh --dry-run --exclude '__pycache__' 
+rsync ./text ../func/azure/text -avzh --dry-run --exclude '__pycache__'
+
+rsync ./app ../func/azure/app -avzh  --exclude '__pycache__'
+rsync ./text ../func/azure/text -avzh --exclude '__pycache__'
+
+rsync ./app ../func/scw/handlers/app -avzh --dry-run --exclude '__pycache__'
+rsync ./text ../func/scw/handlers/text -avzh --dry-run --exclude '__pycache__'
+
+rsync ./app ../func/scw/handlers/app -avzh  --exclude '__pycache__'
+rsync ./text ../func/scw/handlers/text -avzh --exclude '__pycache__'
