@@ -1,5 +1,6 @@
-线上alpine镜像 无法运行numpy 放弃 
-可能办法: dockerfile从源码构建
+# 不要尝试直接放弃
+线上alpine镜像 无法运行numpy 
+可能办法: dockerfile从源码构建numpy 
 
 
 

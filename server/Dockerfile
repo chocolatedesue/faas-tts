@@ -2,16 +2,14 @@ FROM python:3.9.16-slim-buster
 
 WORKDIR /app
 
-COPY  requirements.txt /app/requirements.txt
+COPY  ./requirements.txt /app/requirements.txt
 
 
 RUN python -m pip install --upgrade pip --no-cache-dir && \
     pip install -r requirements.txt  --no-cache-dir 
 
 RUN  python -c "import pyopenjtalk; pyopenjtalk._lazy_init()" && \
-    python -c "import jieba; jieba.initialize()" && \
-    apt autoremove -y && \
-    rm -rf /var/lib/apt/lists/*
+    python -c "import jieba; jieba.initialize()" 
 
 COPY ./app /app/app
 COPY ./text /app/text

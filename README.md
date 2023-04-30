@@ -1,6 +1,11 @@
 ## 简介
 利用各种faas部署dl模型或g2p服务
 
+server 提供 python asgi接口 基于fastapi py=3.9
+func   提供具体云厂商实现
+
+
+
 ## faas研究结果
 1. azure 可以简单有轮子  g2p和model都行 
 2. aws lambda docker体验好 但是pricing不好  zip解压后250m限制 不能部署大模型和g2p
