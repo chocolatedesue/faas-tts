@@ -1,4 +1,6 @@
 function clean_cache(){
+    pip install -r requirements.txt -t packages
+
     # remove all __pycache__ in current directory and subdirectory
     find . -name '__pycache__' -type d -exec rm -rf {} +
     

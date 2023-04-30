@@ -4,7 +4,7 @@
 
 # azure-functions
 pyopenjtalk-prebuilt==0.3.0
-cn2an
+cn2an 
 jieba
 pypinyin
 pydub
@@ -14,6 +14,6 @@ mangum
 # av
 fastapi
 pydantic
-onnxruntime
+# onnxruntime
 unidecode
-uvicorn 
+# uvicorn 

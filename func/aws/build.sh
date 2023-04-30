@@ -16,7 +16,7 @@ pip install -t ./package -r requirements.txt
 
 # exclude __pycache__ and .git with recursive
 7z a -tzip -aoa func.zip app text  handler.py '-xr!__pycache__ -xr!.git'
-cd package
+cd packages
 
 7z a -tzip -aoa ../func.zip .
 

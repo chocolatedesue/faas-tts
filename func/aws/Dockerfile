@@ -18,7 +18,7 @@ COPY  ./handler.py ${LAMBDA_TASK_ROOT}/handler.py
 COPY ./app ${LAMBDA_TASK_ROOT}/app
 COPY ./text  ${LAMBDA_TASK_ROOT}/text
 
-COPY  ./weight ${LAMBDA_TASK_ROOT}/weight
+# COPY  ./weight ${LAMBDA_TASK_ROOT}/weight
 
 
 # RUN cd ${LAMBDA_TASK_ROOT} && \
