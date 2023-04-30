@@ -1,5 +1,5 @@
-service: newttsg2p
-configValidationMode: off
+service: ttsg2p
+# configValidationMode: off
 
 useDotenv: true
 
@@ -26,13 +26,15 @@ package:
     - '!.env'
     - "!package-lock.json"
     - "!package.json"
+    - "!README.md"
+    
     
 
 
 functions:
   jpcng2p:
-    handler: handlers/handler.handler
-    memoryLimit: 256
+    handler: handler.handler
+    memoryLimit: 512
     # Local environment variables - used only in given function
     # env:
     #   local: local

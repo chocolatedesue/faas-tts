@@ -1,10 +1,10 @@
 """ from https://github.com/keithito/tacotron """
 import json
 import re
-import pyopenjtalk
-from pypinyin import lazy_pinyin, BOPOMOFO
-import jieba
-import cn2an
+# import pyopenjtalk
+# from pypinyin import lazy_pinyin, BOPOMOFO
+# import jieba
+# import cn2an
 from . import cleaners
 
 _symbol_to_id = None
