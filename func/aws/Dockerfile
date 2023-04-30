@@ -11,7 +11,8 @@ RUN    python -c "import pyopenjtalk; pyopenjtalk._lazy_init()" && \
     python -c "import jieba; jieba.initialize()"
 
 
-RUN python -c "import onnxruntime;"
+# RUN pip install -U onnxruntime -t ${LAMBDA_TASK_ROOT} && \
+#     pip install -U onnxruntime
 
 COPY  ./handler.py ${LAMBDA_TASK_ROOT}/handler.py
 COPY ./app ${LAMBDA_TASK_ROOT}/app
