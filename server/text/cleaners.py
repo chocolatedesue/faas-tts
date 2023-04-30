@@ -1,5 +1,5 @@
 import re
-import pyopenjtalk
+# import pyopenjtalk
 
 
 
