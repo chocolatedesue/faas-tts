@@ -4,7 +4,7 @@
 # az functionapp list 
 az functionapp list --query "[].{name:name,resourceGroup:resourceGroup}" -o table
 
-name=jpg2p
+name=hkg2p
 group_name=$name"_group"
 storage_name=$name"_storage"
 region=eastasia

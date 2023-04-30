@@ -15,11 +15,22 @@ ort_sess = None
 
 def vits_onnx_infer(ttsBody: CleanTTSBody):
     seq, speaker_id, speed, noise, noisew, sampling_rate = ttsBody.sequence, ttsBody.sid, ttsBody.lenth, ttsBody.noise, ttsBody.noisew, ttsBody.sample_rate
-
-    from loguru import logger
-    import numpy as np
-    import onnxruntime
     from pathlib import Path
+
+    try:
+        from loguru import logger
+        import numpy as np
+        import onnxruntime
+    except ImportError:
+        try:
+            import subprocess
+            subprocess.check_call(["python", '-m', 'pip', 'install', 'onnxruntime', 'loguru', 'numpy'])
+            import numpy as np
+            import onnxruntime
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=f"onnxruntime, loguru, numpy not found, please install them manually or use pip install -r requirements.txt, error: {e}")
+
+
 
     global ort_sess
     model = Path('./weight/model.onnx')

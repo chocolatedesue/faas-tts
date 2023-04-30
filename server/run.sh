@@ -16,8 +16,8 @@ function add_env {
 
 # mkdir -p  ../func/azure/app
 # rm -rf  ../func/azure/app 
-rsync ./app ../func/azure -avzh  --exclude '__pycache__' --dry-run
-rsync ./text ../func/azure -avzh --exclude '__pycache__'    --dry-run
+rsync ./app ../func/azure -avzh  --exclude '__pycache__' 
+rsync ./text ../func/azure -avzh --exclude '__pycache__'    
 
 rm -rf ../func/scw/app
 rm -rf ../func/scw/text
