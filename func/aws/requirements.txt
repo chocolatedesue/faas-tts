@@ -8,11 +8,12 @@ cn2an
 jieba
 pypinyin
 pydub
+requests
 loguru
+mangum
+# av
 fastapi
 pydantic
 onnxruntime
 unidecode
-six
 uvicorn 
-mangum

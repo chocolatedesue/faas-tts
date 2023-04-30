@@ -35,3 +35,9 @@ aws lambda update-function-code --function-name jpg2p \
 
 
 aws lambda
+
+
+function arm(){
+    # arm64
+    docker buildx build --platform linux/arm64 -t test .
+}
