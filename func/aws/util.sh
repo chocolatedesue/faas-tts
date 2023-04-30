@@ -31,3 +31,8 @@ function download_jp_model(){
     
     
 }
+
+function delete(){
+    # delete ecr 
+    # aws ecr list-repositories --region ap-northeast-1 | jq -r '.repositories[].repositoryName' | xargs -L1 -I{} aws ecr delete-repository --repository-name {} --region ap-northeast-1 --force
+}

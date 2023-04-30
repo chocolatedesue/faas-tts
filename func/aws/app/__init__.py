@@ -47,9 +47,6 @@ from os import path
     #     return {"start_time": str(START_TIME)}
 
 
-
-
-
 @app.get("/ping", description="检查服务是否正常")
 def ping():
     return {"ping": "pong!"}
