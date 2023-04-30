@@ -4,8 +4,8 @@ WORKDIR /app
 
 COPY  requirements.txt /app/requirements.txt
 
-RUN python -m pip install --upgrade pip && \
-    pip install -r requirements.txt && \
+RUN python -m pip install --upgrade pip --no-cache-dir && \
+    pip install -r requirements.txt  --no-cache-dir && \
     python -c "import pyopenjtalk; pyopenjtalk._lazy_init()" && \
     python -c "import jieba; jieba.initialize()"
 

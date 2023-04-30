@@ -47,7 +47,7 @@ def g2p(g2pBody: G2pBody):
 
 
 @router.get(
-    "/",description="get avaliable cleaners and symbols"
+    "/dict",description="get avaliable cleaners and symbols"
 )
 def get_symbols_dict():
     # return {"avaiable_cleaners": list(symbols_dict.keys())}

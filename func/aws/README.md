@@ -13,3 +13,5 @@ lambda设置 2048M  timeout 10s 以上
 lambda设置 256M  timeout 2s
 
 ### 依赖
+
+zip 部署暂时不能用 250m限制

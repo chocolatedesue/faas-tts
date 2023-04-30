@@ -1,4 +1,4 @@
-service: scaleway-python3
+service: ttsg2p
 configValidationMode: off
 
 useDotenv: true
@@ -30,8 +30,9 @@ package:
 
 
 functions:
-  frg2p:
+  jpcng2p:
     handler: handlers/handler.handler
+    memoryLimit: 256
     # Local environment variables - used only in given function
     # env:
     #   local: local

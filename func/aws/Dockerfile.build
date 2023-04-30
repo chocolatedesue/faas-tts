@@ -1,0 +1,17 @@
+
+FROM public.ecr.aws/lambda/python:3.9
+
+COPY ./requirements.txt ./
+
+
+
+RUN pip install --upgrade pip --no-cache-dir && \
+    pip install -r requirements.txt -t /packages --no-cache-dir && \
+    cd /packages 
+
+RUN cd /packages && \
+    python -c "import pyopenjtalk; pyopenjtalk._lazy_init()" && \
+    python -c "import jieba; jieba.initialize()" && \
+    find . -name '__pycache__' -type d -exec rm -rf {} +
+
+ENTRYPOINT [ "/bin/sh" ]

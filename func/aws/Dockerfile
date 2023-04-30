@@ -7,8 +7,8 @@ COPY requirements.txt ./
 
 RUN python -m pip install --upgrade pip && \
     pip install -r requirements.txt -t ${LAMBDA_TASK_ROOT} 
-RUN    python -c "import pyopenjtalk; pyopenjtalk._lazy_init()" && \
-    python -c "import jieba; jieba.initialize()"
+# RUN    python -c "import pyopenjtalk; pyopenjtalk._lazy_init()" && \
+#     python -c "import jieba; jieba.initialize()"
 
 
 

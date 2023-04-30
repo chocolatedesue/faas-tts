@@ -56,7 +56,9 @@ def  text_to_seq_func(text: str, cleaner_names, symbols, add_blank=True):
     # global pattern
     # if not pattern:
     pattern = build_pattern()
-    text = pattern.sub(' ', text).strip()
+    if cleaner_names == "japanese_cleaners2":
+        # 简单优化
+        text = pattern.sub(' ', text).strip()
 
     clean_text, text_norm = text_to_sequence_func(
         text, symbols, cleaner_names=cleaner_names)

@@ -12,7 +12,7 @@ aws s3api create-bucket --bucket $bucket_name \
 
 aws s3 ls s3://$bucket_name
 
-pip install -t ./package -r requirements.txt
+pip install -t ./packages -r requirements.txt
 
 # exclude __pycache__ and .git with recursive
 7z a -tzip -aoa func.zip app text  handler.py '-xr!__pycache__ -xr!.git'
@@ -38,6 +38,7 @@ aws lambda
 
 
 function arm(){
-    # arm64
-    docker buildx build --platform linux/arm64 -t test .
+    docker rmi test
+    docker buildx build --platform linux/amd64 -t test -f Dockerfile.build .
+    docker run --rm -v $PWD/packages:/packages test 
 }

@@ -1,52 +1,87 @@
+from fastapi import HTTPException
 from app.schemas import CleanTTSBody, RawTTSBody
 from io import BytesIO
 from text import text_to_seq_func, symbols_dict
 from fastapi.responses import StreamingResponse
 from fastapi.routing import APIRouter
+from app.util import download_with_tqdm
 
 router = APIRouter(
     tags=["vits_onnx"]
 )
 
+ort_sess = None 
 
 
 def vits_onnx_infer(ttsBody: CleanTTSBody):
     seq, speaker_id, speed, noise, noisew, sampling_rate = ttsBody.sequence, ttsBody.sid, ttsBody.lenth, ttsBody.noise, ttsBody.noisew, ttsBody.sample_rate
+    from pathlib import Path
 
-    from loguru import logger
-    import numpy as np
-    import onnxruntime
+    try:
+        from loguru import logger
+        import numpy as np
+        import onnxruntime
+    except ImportError:
+        try:
+            import subprocess
+            subprocess.check_call(["python", '-m', 'pip', 'install', 'onnxruntime', 'loguru', 'numpy'])
+            import numpy as np
+            import onnxruntime
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=f"onnxruntime, loguru, numpy not found, please install them manually or use pip install -r requirements.txt, error: {e}")
+
+
 
     global ort_sess
+    model = Path('./weight/model.onnx')
     if not ort_sess:
-        from pathlib import Path
-        model = Path('./weight/model.onnx')
+        
+        
         # if os.getenv("IS_DOWNLOAD"):
-        import os 
-        if os.getenv("IS_DOWNLOAD_JP_MODEL"):
-            import requests
-            url = "https://r2share.ccds.win/vits_onnx/jp/model.onnx"
-            r = requests.get(url, allow_redirects=True)
-            if not model.parent.exists():
-                model.parent.mkdir(parents=True)
-            with open(model, 'wb') as f:
-                f.write(r.content)
+        if not model.parent.exists():
+            model.parent.mkdir(parents=True)
 
-        if os.getenv("IS_DOWNLOAD_JP_CN_MODEL"):
-            import requests
-            url = "https://r2share.ccds.win/vits_onnx/jp_cn/model.onnx"
-            r = requests.get(url, allow_redirects=True)
-            if not model.parent.exists():
-                model.parent.mkdir(parents=True)
-            with open(model, 'wb') as f:
-                f.write(r.content)
-
-        # if not os.path.exists('vits.onnx'):
         if not model.exists():
-            raise FileNotFoundError(
-                "please provide a model named 'model.onnx' in the ./weight folder.")
+          
+            import os 
+            from loguru import logger 
+            url = None
+            config_url = None
+            if os.getenv("MODEL_URL") and os.getenv("CONFIG_URL"):
+                logger.info("Downloading model from MODEL_URL")
+                url = os.getenv("MODEL_URL")
+                config_url = os.getenv("CONFIG_URL")
+                # download_with_tqdm(url, str(model))
 
-        ort_sess = onnxruntime.InferenceSession(str(model))
+
+            elif os.getenv("IS_DOWNLOAD_JP_MODEL"):
+    
+                logger.info("Downloading jp model from r2share.ccds.win")
+                url = "https://r2share.ccds.win/vits_onnx/jp/model.onnx"
+                config_url = "https://r2share.ccds.win/vits_onnx/jp/config.json"
+                
+                # download_with_tqdm(url, str(model))
+
+            elif os.getenv("IS_DOWNLOAD_JP_CN_MODEL"):
+                logger.info("Downloading jp_cn model from r2share.ccds.win")
+                url = "https://r2share.ccds.win/vits_onnx/jp_cn/model.onnx"
+                # download_with_tqdm(url, str(model))
+                config_url = "https://r2share.ccds.win/vits_onnx/jp_cn/config.json"
+
+            # if not os.path.exists('vits.onnx'):
+            else:
+                raise HTTPException(status_code=500, detail="Model not found, please set MODEL_URL or IS_DOWNLOAD_JP_MODEL or IS_DOWNLOAD_JP_CN_MODEL or put model.onnx in ./weight/")
+            # if url and config_url:
+            # try:
+            
+
+            download_with_tqdm(url, str(model))
+            download_with_tqdm(config_url, str(model.parent / "config.json"))
+            
+
+ 
+
+    ort_sess = onnxruntime.InferenceSession(str(model))
 
     x = np.array([seq], dtype=np.int64)
     x_len = np.array([x.shape[1]], dtype=np.int64)
@@ -60,17 +95,25 @@ def vits_onnx_infer(ttsBody: CleanTTSBody):
         'scales': scales,
         'sid': sid
     }
-    audio = np.squeeze(ort_sess.run(None, ort_inputs))
-    audio *= 32767.0 / max(0.01, np.max(np.abs(audio))) * 0.6
-    audio = np.clip(audio, -32767.0, 32767.0)
-    import pydub
-    seg = pydub.AudioSegment(
-        audio.astype(np.int16).tobytes(), frame_rate=sampling_rate, sample_width=2, channels=1)
-    # return seg
-    # seg.export("test.wav", format="wav")
-    with BytesIO() as f:
-        seg.export(f, format="wav")
-        return f.getvalue()
+    try:
+        audio = np.squeeze(ort_sess.run(None, ort_inputs))
+        audio *= 32767.0 / max(0.01, np.max(np.abs(audio))) * 0.6
+        audio = np.clip(audio, -32767.0, 32767.0)
+        import pydub
+        seg = pydub.AudioSegment(
+            audio.astype(np.int16).tobytes(), frame_rate=sampling_rate, sample_width=2, channels=1)
+        # return seg
+        # seg.export("test.wav", format="wav")
+        with BytesIO() as f:
+            seg.export(f, format="wav")
+            return f.getvalue()
+    except Exception as e:
+        logger.error(e)
+        e_msg = str(e)
+        raise HTTPException(status_code=500, detail=f"""
+            possible error: sid bigger than expected
+            model.onnx error: {e_msg}
+        """)
     
 
 @router.post("/clean/tts",response_class=StreamingResponse)
@@ -94,3 +137,16 @@ def raw_tts(ttsBody: RawTTSBody):
                             noisew=ttsBody.noisew, sample_rate=ttsBody.sample_rate, sequence=seq)
     audio_bytes =  vits_onnx_infer(ttsBody)
     return StreamingResponse(BytesIO(audio_bytes), media_type="audio/wav")
+
+
+@router.get("/model_config")
+def get_model_config():
+    from pathlib import Path
+    import json
+    model_config = Path('./weight/config.json')
+    if not model_config.exists():
+        raise HTTPException(status_code=500, detail="config.json not found, please put config.json in ./weight/")
+
+    with open(model_config, "r") as f:
+        config = json.load(f)
+    return config

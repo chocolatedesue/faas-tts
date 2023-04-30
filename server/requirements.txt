@@ -3,7 +3,8 @@
 # Manually managing azure-functions-worker may cause unexpected issues
 
 # azure-functions
-pyopenjtalk-prebuilt==0.3.0
+
+openjtalk==0.3.0.dev2
 cn2an
 jieba
 pypinyin
@@ -13,6 +14,6 @@ loguru
 # av
 fastapi
 pydantic
-onnxruntime
+# onnxruntime
 unidecode
 uvicorn 

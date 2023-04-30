@@ -19,10 +19,10 @@ function add_env {
 rsync ./app ../func/azure -avzh  --exclude '__pycache__' --dry-run
 rsync ./text ../func/azure -avzh --exclude '__pycache__'    --dry-run
 
-
-
-rsync ./app ../func/azure -avzh  --exclude '*__pycache__'
-rsync ./text ../func/azure -avzh --exclude '*__pycache__'
+rm -rf ../func/scw/handlers/app
+rm -rf ../func/scw/handlers/text
+rsync ./app ../func/scw/handlers -avzh  --exclude '*__pycache__'
+rsync ./text ../func/scw/handlers -avzh --exclude '*__pycache__'
 
 
 
