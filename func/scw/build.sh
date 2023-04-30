@@ -10,6 +10,7 @@ docker run --rm -v $(pwd):/home/app/function --workdir /home/app/function rg.fr-
 
 cd ./package
 python -c "import pyopenjtalk; pyopenjtalk._lazy_init()"
+  python -c "import jieba; jieba.initialize()"
 cd -
 
 }

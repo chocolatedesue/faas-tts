@@ -21,8 +21,10 @@ rsync ./text ../func/azure -avzh --exclude '__pycache__'    --dry-run
 
 
 
-rsync ./app ../func/azure -avzh  --exclude '__pycache__'
-rsync ./text ../func/azure -avzh --exclude '__pycache__'
+rsync ./app ../func/azure -avzh  --exclude '*__pycache__'
+rsync ./text ../func/azure -avzh --exclude '*__pycache__'
+
+
 
 rsync ./app ../func/aws -azvh  --exclude '__pycache__'
 rsync ./text ../func/aws -azvh --exclude '__pycache__'

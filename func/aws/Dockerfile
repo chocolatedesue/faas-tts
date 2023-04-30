@@ -5,8 +5,8 @@ FROM public.ecr.aws/lambda/python:3.9
 COPY requirements.txt ./
 
 RUN python -m pip install --upgrade pip && \
-    pip install -r requirements.txt && \
-    python -c "import pyopenjtalk; pyopenjtalk._lazy_init()" && \
+    pip install -r requirements.txt -t ${LAMBDA_TASK_ROOT} 
+RUN    python -c "import pyopenjtalk; pyopenjtalk._lazy_init()" && \
     python -c "import jieba; jieba.initialize()"
 
 
@@ -23,4 +23,11 @@ CMD [ "hander.handler" ]
 
 
 
+# FROM public.ecr.aws/lambda/python:3.9
 
+# RUN pip install -U pip && \
+#     pip install fastapi mangum uvicorn -t "${LAMBDA_TASK_ROOT}"
+
+# COPY test.py ${LAMBDA_TASK_ROOT}/app.py
+
+# CMD ["app.handler"]
