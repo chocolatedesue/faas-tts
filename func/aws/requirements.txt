@@ -11,7 +11,7 @@ pydub
 loguru
 fastapi
 pydantic
-# onnxruntime
+onnxruntime
 unidecode
 six
 uvicorn 

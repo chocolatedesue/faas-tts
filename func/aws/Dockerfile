@@ -1,3 +1,4 @@
+
 FROM public.ecr.aws/lambda/python:3.9
 
 # WORKDIR /app
@@ -9,6 +10,8 @@ RUN python -m pip install --upgrade pip && \
 RUN    python -c "import pyopenjtalk; pyopenjtalk._lazy_init()" && \
     python -c "import jieba; jieba.initialize()"
 
+
+RUN python -c "import onnxruntime;"
 
 COPY  ./handler.py ${LAMBDA_TASK_ROOT}/handler.py
 COPY ./app ${LAMBDA_TASK_ROOT}/app

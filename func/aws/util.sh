@@ -4,11 +4,16 @@ function clean_cache(){
     
 }
 
-function test{
+function test(){
     docker push 985441773004.dkr.ecr.ap-northeast-1.amazonaws.com/vits_onnx:test
 
-    docker run --rm -p 9000:8000   985441773004.dkr.ecr.ap-northeast-1.amazonaws.com/vits_onnx:latest
+    docker run --rm -p 9000:8080   985441773004.dkr.ecr.ap-northeast-1.amazonaws.com/vits_onnx:latest
 
     curl -XPOST "http://localhost:9000/2015-03-31/functions/function/invocations" -d '{"payload":"hello world!"}'
     
+}
+
+function test2(){
+    docker build . -t test 
+    docker run --rm -p 9000:8080 test 
 }
