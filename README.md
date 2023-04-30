@@ -1,9 +1,9 @@
 ## 简介
 利用各种faas部署dl模型或g2p服务
 
-server 提供 python asgi接口 基于fastapi py=3.9
-func   提供具体云厂商实现
+server 提供 python asgi接口 基于fastapi py=3.9 
 
+func   提供具体云厂商实现
 
 
 ## faas研究结果
