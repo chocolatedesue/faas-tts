@@ -1,4 +1,4 @@
-service: ttsg2p
+service: newttsg2p
 configValidationMode: off
 
 useDotenv: true
