@@ -3,8 +3,9 @@
 # Manually managing azure-functions-worker may cause unexpected issues
 
 # azure-functions
-
-openjtalk==0.3.0.dev2
+# 第一个glibc 版本不太行
+# openjtalk==0.3.0.dev2
+pyopenjtalk-prebuilt==0.3.0
 cn2an
 jieba
 pypinyin
