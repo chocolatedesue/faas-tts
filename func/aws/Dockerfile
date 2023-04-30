@@ -10,11 +10,11 @@ RUN    python -c "import pyopenjtalk; pyopenjtalk._lazy_init()" && \
     python -c "import jieba; jieba.initialize()"
 
 
-COPY  ./handler.py ${LAMBDA_TASK_ROOT}
+COPY  ./handler.py ${LAMBDA_TASK_ROOT}/handler.py
 COPY ./app ${LAMBDA_TASK_ROOT}/app
 COPY ./text  ${LAMBDA_TASK_ROOT}/text
 
-CMD [ "hander.handler" ]
+CMD [ "handler.handler" ]
 
 
 
